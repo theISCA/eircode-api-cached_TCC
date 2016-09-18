@@ -1,13 +1,12 @@
-package com.fexco.address;
+package org.rodrigomalara.address;
 
+import org.rodrigomalara.address.service.AddressURIBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.client.RestTemplate;
-
-import com.fexco.address.service.AddressURIBuilder;
 
 @SpringBootApplication
 public class Application {

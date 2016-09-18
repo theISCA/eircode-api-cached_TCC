@@ -1,4 +1,4 @@
-package com.fexco.address.service;
+package org.rodrigomalara.address.service;
 
 import java.util.List;
 

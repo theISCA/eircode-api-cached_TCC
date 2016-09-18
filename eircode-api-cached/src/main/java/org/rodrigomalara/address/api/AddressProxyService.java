@@ -1,10 +1,11 @@
-package com.fexco.address.api;
+package org.rodrigomalara.address.api;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 
+import org.rodrigomalara.address.service.PostcoderAddressClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.fexco.address.service.PostcoderAddressClient;
 
 /**
  * http://ws.postcoder.com/pcw/[api-key]/address/ie/[eircode-or-address-fragment]

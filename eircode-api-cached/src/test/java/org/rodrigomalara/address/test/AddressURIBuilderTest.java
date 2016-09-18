@@ -1,4 +1,4 @@
-package com.fexco.address.test;
+package org.rodrigomalara.address.test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -10,12 +10,11 @@ import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rodrigomalara.address.service.AddressURIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.fexco.address.service.AddressURIBuilder;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
