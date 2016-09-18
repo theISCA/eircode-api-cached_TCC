@@ -3,7 +3,8 @@ package com.fexco.service.eircode;
 import java.net.URI;
 import java.util.Arrays;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,7 +32,7 @@ public class EircodeRestClient implements EircodeClient {
 	private String eircodeRGeoUrl;
 
 	@Override
-	public String address(@NotBlank String apiKey, @NotBlank String eircodeOrAddressFrag,
+	public String address(@NotNull String apiKey, @NotNull String eircodeOrAddressFrag,
 			 String format, MediaType acceptFormat, Integer lines, Integer page,
 			 String include, String exclude, String addtags, String identifier,
 			 String callback) {
@@ -57,11 +58,11 @@ public class EircodeRestClient implements EircodeClient {
 
 	}
 
-	public URI generateAddressURI(@NotBlank String baseUrl, @NotBlank String apiKey, @NotBlank String eircodeOrAddressFrag,
+	public URI generateAddressURI(@NotNull String baseUrl, @NotNull String apiKey, @NotNull String eircodeOrAddressFrag,
 			String format, Integer lines, Integer page, String include, String exclude,
 			String addtags, String identifier, String callback) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl);
-		builder.buildAndExpand(apiKey, eircodeOrAddressFrag);
+
 		if (format != null)     builder.queryParam("format", format);
 		if (lines != null)      builder.queryParam("lines", lines);
 		if (page != null)       builder.queryParam("page", page);
@@ -69,9 +70,9 @@ public class EircodeRestClient implements EircodeClient {
 		if (exclude != null)    builder.queryParam("exclude", exclude);
 		if (addtags != null)    builder.queryParam("addtags", addtags);
 		if (identifier != null)	builder.queryParam("identifier", identifier);
-		if (callback != null)   builder.queryParam("identifier", identifier);
+		if (callback != null)   builder.queryParam("callback", callback);
 
-		URI uri = builder.build().encode().toUri();
+		URI uri = builder.buildAndExpand(apiKey, eircodeOrAddressFrag).encode().toUri();
 		return uri;
 	}
 
