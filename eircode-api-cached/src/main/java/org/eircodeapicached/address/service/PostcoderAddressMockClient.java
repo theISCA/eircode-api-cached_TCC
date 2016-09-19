@@ -1,4 +1,4 @@
-package org.rodrigomalara.address.service;
+package org.eircodeapicached.address.service;
 
 import java.util.List;
 import java.util.regex.Pattern;

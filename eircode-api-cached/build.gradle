@@ -29,6 +29,10 @@ targetCompatibility = 1.8
 
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'org.springframework.boot:spring-boot-starter-cache'
+	compile 'javax.cache:cache-api:1.0.0'
+	compile 'org.springframework.data:spring-data-redis'
+	compile 'redis.clients:jedis:2.6.1'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	testCompile 'org.assertj:assertj-core:3.5.2'
 	testCompile 'uk.co.datumedge:hamcrest-json:0.2'

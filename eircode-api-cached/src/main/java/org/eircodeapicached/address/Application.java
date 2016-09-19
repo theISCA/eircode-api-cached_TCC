@@ -1,24 +1,19 @@
-package org.rodrigomalara.address;
+package org.eircodeapicached.address;
 
-import org.rodrigomalara.address.service.AddressURIBuilder;
+import org.eircodeapicached.address.service.AddressURIBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
-import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
+@EnableCaching
 public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
-    @Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
 
     @Bean
 	public AddressURIBuilder addressURIBuilder() {

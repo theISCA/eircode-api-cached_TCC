@@ -1,11 +1,11 @@
-package org.rodrigomalara.address.api;
+package org.eircodeapicached.address.api;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 
-import org.rodrigomalara.address.service.PostcoderAddressClient;
+import org.eircodeapicached.address.service.PostcoderAddressClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

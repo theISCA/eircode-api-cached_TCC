@@ -1,9 +1,10 @@
-package org.rodrigomalara.address.service;
+package org.eircodeapicached.address.service;
 
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
+import javax.cache.annotation.CacheResult;
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ public class PostcoderAddressRestCachedClient implements PostcoderAddressClient 
 	private AddressURIBuilder uriBuilder;
 
 	@Override
+	@CacheResult(cacheName="addressCache")
 	public String address(@NotNull String apiKey, @NotNull String country, String eircodeOrAddressFrag,
 			 String format, List<MediaType> acceptFormat, Integer lines, Integer page,
 			 String include, String exclude, String addtags, String identifier,
@@ -45,31 +47,25 @@ public class PostcoderAddressRestCachedClient implements PostcoderAddressClient 
 				include, exclude, addtags, identifier, callback, postcodeonly);
 		log.debug("REST service URI generated");
 
-		// TODO: Verify if it is present on the cache
-		boolean presentInCache = false;
-		if (presentInCache) {
-			return "cached content";
-		} else {
-			RestTemplate restTemplate = new RestTemplate();
-			HttpHeaders headers = new HttpHeaders();
-			if (acceptFormat != null) {
-			  log.debug("Setting Accept HTTP header before invoking Postcoder service");
-			  headers.setAccept(acceptFormat);
-			}
-
-			HttpEntity<?> entity = new HttpEntity<>(headers);
-			log.debug("About to invoke Postcoder service...");
-
-			Date before = new Date();
-			HttpEntity<String> response = restTemplate.exchange(
-					uri, HttpMethod.GET, entity, String.class);
-			Date after = new Date();
-
-			String responseBody = response.getBody();
-			log.trace(">> {}", responseBody);
-			log.debug("Service invoked in {} ms", after.getTime() - before.getTime());
-
-		    return responseBody;
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		if (acceptFormat != null) {
+		  log.debug("Setting Accept HTTP header before invoking Postcoder service");
+		  headers.setAccept(acceptFormat);
 		}
+
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		log.debug("About to invoke Postcoder service...");
+
+		Date before = new Date();
+		HttpEntity<String> response = restTemplate.exchange(
+				uri, HttpMethod.GET, entity, String.class);
+		Date after = new Date();
+
+		String responseBody = response.getBody();
+		log.trace(">> {}", responseBody);
+		log.debug("Service invoked in {} ms", after.getTime() - before.getTime());
+
+	    return responseBody;
 	}
 }
