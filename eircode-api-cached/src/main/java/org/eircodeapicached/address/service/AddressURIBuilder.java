@@ -6,16 +6,18 @@ import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Validated
+@Controller
 public class AddressURIBuilder {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public URI generateAddressURIFromUrl(@NotNull String baseUrl, @NotNull String apiKey, @
-			NotNull String country, String eircodeOrAddressFrag,
+	public URI generateAddressURIFromUrl(@NotNull String baseUrl, @NotNull String apiKey,
+			@NotNull String country, String eircodeOrAddressFrag,
 			String format, Integer lines, Integer page, String include, String exclude,
 			String addtags, String identifier, String callback, Boolean postcodeonly) {
 
@@ -28,8 +30,8 @@ public class AddressURIBuilder {
 		return result;
 	}
 
-	public URI generateAddressURIFromPath(@NotNull String baseUrl, @NotNull String apiKey, @
-			NotNull String country, String eircodeOrAddressFrag,
+	public URI generateAddressURIFromPath(@NotNull String baseUrl, @NotNull String apiKey,
+			@NotNull String country, String eircodeOrAddressFrag,
 			String format, Integer lines, Integer page, String include, String exclude,
 			String addtags, String identifier, String callback, Boolean postcodeonly) {
 

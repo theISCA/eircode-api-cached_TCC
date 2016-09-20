@@ -8,12 +8,13 @@ buildscript {
 	}
 }
 
-group = 'rodrigomalara/eircode-api-cached'
+group = 'rodrigomalara'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 apply plugin: 'docker'
+apply plugin: 'jacoco'
 
 jar {
 	baseName = 'eircode-api-cached'
@@ -39,7 +40,6 @@ dependencies {
 }
 
 task buildDocker(type: Docker, dependsOn: build) {
-	push = true
 	applicationName = jar.baseName
 	dockerfile = file('src/main/docker/Dockerfile')
 	doFirst {
@@ -49,3 +49,9 @@ task buildDocker(type: Docker, dependsOn: build) {
 	  }
 	}
   }
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}

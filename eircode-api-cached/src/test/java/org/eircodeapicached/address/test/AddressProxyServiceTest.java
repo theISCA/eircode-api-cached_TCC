@@ -3,11 +3,10 @@ package org.eircodeapicached.address.test;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URI;
 
@@ -42,7 +41,6 @@ public class AddressProxyServiceTest {
 				"json", 1, 0, "include", "exclude", "addtags", "identifier", "callback", true);
 
 		this.mockMvc.perform(get(uri.toString() + "&mock=true"))
-		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(header().string("Content-type", "application/json"))
 		.andExpect(content().string(containsString("123")))
@@ -66,7 +64,6 @@ public class AddressProxyServiceTest {
 				"json", null, null, null, null, null, null, null, null );
 
 		this.mockMvc.perform(get(uri.toString() + "&mock=true"))
-		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(header().string("Content-type", "application/json"))
 		.andExpect(content().string(containsString("123")))
@@ -82,7 +79,6 @@ public class AddressProxyServiceTest {
 				"xml", null, null, null, null, null, null, null, null );
 
 		this.mockMvc.perform(get(uri.toString() + "&mock=true"))
-		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(header().string("Content-type", "application/xml"))
 		.andExpect(content().string(containsString("123")))
@@ -98,7 +94,6 @@ public class AddressProxyServiceTest {
 				null, null, null, null, null, null, null, null, null );
 
 		this.mockMvc.perform(get(uri.toString() + "?mock=true").header("Accept", "application/xml"))
-			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(header().string("Content-type", "application/xml"))
 			.andExpect(content().string(containsString("123")))
@@ -120,7 +115,6 @@ public class AddressProxyServiceTest {
 		String serviceUrl = "/pcw/PCW45-12345-12345-1234X/address/ie/D02X285?lines=3&format=json";
 
 		this.mockMvc.perform(get(serviceUrl))
-			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(header().string("Content-type", "application/json"))
 			.andExpect(jsonPath("$[0].postcode", equalTo("D02 X285")));
@@ -141,7 +135,6 @@ public class AddressProxyServiceTest {
 		String serviceUrl = "/pcw/PCW45-12345-12345-1234X/address/ie/D02X285?lines=3&format=xml";
 
 		this.mockMvc.perform(get(serviceUrl))
-			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(header().string("Content-type", "application/xml"))
 			.andExpect(content().string(containsString("<postcode>D02 X285</postcode>")));
@@ -161,7 +154,6 @@ public class AddressProxyServiceTest {
 		String serviceUrl = "/pcw/PCW45-12345-12345-1234X/address/uk/NR147PZ?format=xml";
 
 		this.mockMvc.perform(get(serviceUrl))
-			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(header().string("Content-type", "application/xml"))
 			.andExpect(content().string(containsString("<postcode>NR14 7PZ</postcode>")));
@@ -181,7 +173,6 @@ public class AddressProxyServiceTest {
 		String serviceUrl = "/pcw/PCW45-12345-12345-1234X/address/uk/manor%20farm%20barns?format=xml";
 
 		this.mockMvc.perform(get(serviceUrl))
-			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(header().string("Content-type", "application/xml"))
 			.andExpect(content().string(containsString("<buildingname>Manor Farm Barns</buildingname>")));
@@ -202,7 +193,6 @@ public class AddressProxyServiceTest {
 		String serviceUrl = "/pcw/PCW45-12345-12345-1234X/address/uk/NR147PZ?format=json&lines=3";
 
 		this.mockMvc.perform(get(serviceUrl))
-			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(header().string("Content-type", "application/json"))
 			.andExpect(jsonPath("$[0].postcode", equalTo("NR14 7PZ")));

@@ -65,8 +65,8 @@ public class AddressProxyService {
 				checkAcceptHeader(acceptFormat, MediaType.APPLICATION_XML)) {
 			responseContentType = MediaType.APPLICATION_XML;
 		} else {
-			log.debug("Defaulting response format to {}", format);
 			responseContentType = MediaType.APPLICATION_JSON;
+			log.debug("Defaulting response Content-Type");
 		}
 
 		log.debug("Response Content-Type header: {}", responseContentType.toString());

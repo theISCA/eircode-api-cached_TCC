@@ -1,6 +1,5 @@
 package org.eircodeapicached.address;
 
-import org.eircodeapicached.address.service.AddressURIBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -15,11 +14,10 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean
-	public AddressURIBuilder addressURIBuilder() {
-		return new AddressURIBuilder();
-	}
-
+    /**
+     * Needed for method-level arguments validation.
+     * @return
+     */
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
