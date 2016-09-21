@@ -1,10 +1,11 @@
-package org.eircodeapicached.address.service;
+package org.eircodeapicached.address.service.mock;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.validation.constraints.NotNull;
 
+import org.eircodeapicached.address.service.PostcoderAddressClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

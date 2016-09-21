@@ -1,4 +1,4 @@
-package org.eircodeapicached.address.service;
+package org.eircodeapicached.address.api;
 
 import java.net.URI;
 

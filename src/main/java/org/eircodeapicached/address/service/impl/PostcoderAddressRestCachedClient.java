@@ -1,4 +1,4 @@
-package org.eircodeapicached.address.service;
+package org.eircodeapicached.address.service.impl;
 
 import java.net.URI;
 import java.util.Date;
@@ -7,6 +7,8 @@ import java.util.List;
 import javax.cache.annotation.CacheResult;
 import javax.validation.constraints.NotNull;
 
+import org.eircodeapicached.address.api.AddressURIBuilder;
+import org.eircodeapicached.address.service.PostcoderAddressClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

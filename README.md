@@ -171,7 +171,7 @@ Before continuing
 
 * Change the build.gradle file to contain your repository name on Docker Hub :
 
-    group = '<your Docker Hub account name>'
+    group = 'your Docker Hub account name'
 
 * Create a repository called eircode-api-cached on Docker Hub
 

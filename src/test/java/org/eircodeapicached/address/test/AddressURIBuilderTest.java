@@ -8,7 +8,7 @@ import java.net.URI;
 
 import javax.validation.ConstraintViolationException;
 
-import org.eircodeapicached.address.service.AddressURIBuilder;
+import org.eircodeapicached.address.api.AddressURIBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
