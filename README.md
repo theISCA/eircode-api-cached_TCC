@@ -1,41 +1,41 @@
 # Eircode-api-cached #
 
-	This project was developed to develop a docker API service to query for addresses
-	based on their Eircode (Irish post code) or post code (UK) using a third party API.
+This project was developed to develop a docker API service to query for addresses
+based on their Eircode (Irish post code) or post code (UK) using a third party API.
 
-	These are the two endpoints that were implemented.
-    * https://developers.alliescomputing.com/postcoder-web-api/address-lookup/eircode
-    * https://developers.alliescomputing.com/postcoder-web-api/address-lookup/premise
+These are the two endpoints that were implemented.
+* [https://developers.alliescomputing.com/postcoder-web-api/address-lookup/eircode](https://developers.alliescomputing.com/postcoder-web-api/address-lookup/eircode)
+* [https://developers.alliescomputing.com/postcoder-web-api/address-lookup/premise](https://developers.alliescomputing.com/postcoder-web-api/address-lookup/premise)
 
-	Each call to the third party API has a cost of 4.5 credits per request. We expect
-	this API being called by multiple services that all together add up to one million
-	requests per month. In order to minimize the costs we need to minimize the number
-	of requests to the third party API, without interfering with how the consumer
-	services work.
+Each call to the third party API has a cost of 4.5 credits per request. We expect
+this API being called by multiple services that all together add up to one million
+requests per month. In order to minimize the costs we need to minimize the number
+of requests to the third party API, without interfering with how the consumer
+services work.
 
-	This project exposes an API that is compatible with and uses the third-party API,
-	providing the same API options.
+This project exposes an API that is compatible with and uses the third-party API,
+providing the same API options.
 
-	It avoids repeated requests to hit the third party API. It uses Redis as an
-	production grade in-memory but disk persisted cache see [Redis FAQ](http://redis.io/topics/faq)
-	to allow previous requests survive on service restarts (e.g. after a new version
-	of your service is deployed).
+It avoids repeated requests to hit the third party API. It uses Redis as an
+production grade in-memory but disk persisted cache see [Redis FAQ](http://redis.io/topics/faq)
+to allow previous requests survive on service restarts (e.g. after a new version
+of your service is deployed).
 
-	Although we are using redis, it is possible to switch to any other cache technology supported
-	by Spring Data as can be verified at http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-caching.html
+Although we are using redis, it is possible to switch to any other cache technology supported
+by Spring Data as can be verified at [Boot Reference Caching](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-caching.html)
 
-	This repository contains the proxy service code and unit tests written in Java using
-	Spring Boot and other technologies further explained.
+This repository contains the proxy service code and unit tests written in Java using
+Spring Boot and other technologies further explained.
 
 ## Requirements ##
 
 Below follows the required software. Versions used by the time of development are provided.
 
-* Oracle JDK 8 - 1.8.0_73 - http://www.oracle.com/technetwork/pt/java/javase/downloads
-* Gradle - 2.14.1 - https://gradle.org/gradle-download/
-* Git - 2.9.0 - https://git-scm.com/downloads
-* Docker - 1.12.0 - https://docs.docker.com/engine/installation/
-* Eclipse Neon - 4.6.0 - https://eclipse.org/downloads (optional)
+* Oracle JDK 8 - 1.8.0_73 - [http://www.oracle.com/technetwork/pt/java/javase/downloads](http://www.oracle.com/technetwork/pt/java/javase/downloads)
+* Gradle - 2.14.1 - [https://gradle.org/gradle-download/](https://gradle.org/gradle-download/)
+* Git - 2.9.0 - [https://git-scm.com/downloads](https://git-scm.com/downloads)
+* Docker - 1.12.0 - [https://docs.docker.com/engine/installation/](https://docs.docker.com/engine/installation/)
+* Eclipse Neon - 4.6.0 - [https://eclipse.org/downloads](https://eclipse.org/downloads) (optional)
 
 ## Preparing Docker containers ##
 
@@ -103,9 +103,8 @@ below and check the output.
 
 The requests below are the same tests as available in Postcoder Web by the time of the development.
 
-https://developers.alliescomputing.com/postcoder-web-api/address-lookup/premise
-
-https://developers.alliescomputing.com/postcoder-web-api/address-lookup/eircode
+* https://developers.alliescomputing.com/postcoder-web-api/address-lookup/premise
+* https://developers.alliescomputing.com/postcoder-web-api/address-lookup/eircode
 
 
 * curl -i http://localhost:8080/pcw/PCW45-12345-12345-1234X/address/ie/D02X285?lines=3&format=json
@@ -163,7 +162,7 @@ To remove it
 
     docker rm eircode
 
-### Creating your own docker image ###
+### Creating a new docker image ###
 
 Create your own docker image and storing it on your Docker Hub account, containing
 the application using frolvlad's oraclejdk8:slim image as base.
