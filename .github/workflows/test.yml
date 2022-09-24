@@ -29,5 +29,10 @@ jobs:
 
       - name: Run linters
         uses: wearerequired/lint-action@v3
-        with:
+        with: 
+          auto_fix: true
+          black: true
+          black_auto_fix: true
+          flake8: true
+          flake8_auto_fix: false
           # Enable your linters here
