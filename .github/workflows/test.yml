@@ -15,34 +15,4 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
       - run: java -version
-
-  sonarqube:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: build gradle for sonar
-        uses: gradle/gradle-build-action@v2
-      - run: chmod +x ./gradlew
-      - run: gradle build
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.PROJECT_NAME }}
-            -Dsonar.coverage.exclusions=**/src/test/**,**/model/**,**Application.java,**/config/**,**/util/SecretReader.java
-            -Dsonar.java.binaries=build
-      - name: SonarQube Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      - name: "Show SonarQube Quality Gate Status value"
-        run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
+      
