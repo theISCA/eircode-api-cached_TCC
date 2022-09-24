@@ -16,7 +16,7 @@ jobs:
           distribution: 'temurin'
       - run: java -version
 
-sonarqube:
+  sonarqube:
     runs-on: ubuntu-latest
     needs: build
     steps:
