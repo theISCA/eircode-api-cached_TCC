@@ -48,32 +48,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   sonarqube:
+    name: SonarQubeScan
     runs-on: ubuntu-latest
     needs: lint
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-      - name: build gradle for sonar
-        uses: gradle/gradle-build-action@v2
-      - run: chmod +x ./gradlew
-      - run: gradle build
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
         with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.PROJECT_NAME }}
-            -Dsonar.coverage.exclusions=**/src/test/**,**/model/**,**Application.java,**/config/**,**/util/SecretReader.java
-            -Dsonar.java.binaries=build
-      - name: SonarQube Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
-        timeout-minutes: 5
+          java-version: 11
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      - name: "Show SonarQube Quality Gate Status value"
-        run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=theISCA_eircode-api-cached_TCC
