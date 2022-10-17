@@ -48,6 +48,10 @@ task buildDocker(type: Docker, dependsOn: build) {
 	  }
 	}
   }
+  
+ task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}
 
 jacocoTestReport {
 	reports {
