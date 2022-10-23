@@ -68,6 +68,7 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v1
         with:
+          gradle wrapper: --gradle-version 6.2 --distribution-type all
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
