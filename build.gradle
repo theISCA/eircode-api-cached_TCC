@@ -1,3 +1,9 @@
+plugins {
+    java
+    id("net.ltgt.errorprone") version "3.0.1"
+    id("com.diffplug.spotless") version "6.11.0"
+}
+
 buildscript {
 	repositories {
 		mavenCentral()
@@ -36,6 +42,7 @@ dependencies {
 	compile 'redis.clients:jedis:2.6.1'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	testCompile 'uk.co.datumedge:hamcrest-json:0.2'
+	errorprone("com.google.errorprone:error_prone_core:2.16")
 }
 
 task buildDocker(type: Docker, dependsOn: build) {
@@ -59,14 +66,27 @@ jacocoTestReport {
 	}
 }
 
-plugins {
-  id "org.sonarqube" version "3.5.0.2730"
+configure com.diffplug.gradle.spotless.SpotlessExtension {
+    java {
+        importOrder()
+        removeUnusedImports()
+
+        googleJavaFormat()
+        indentWithTabs(2)
+        indentWithSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+
+        formatAnnotations()
+    }
+    kotlinGradle {
+        ktlint()
+    }
 }
 
-sonarqube {
-  properties {
-    property "sonar.projectKey", "theISCA_eircode-api-cached_TCC"
-    property "sonar.organization", "theisca"
-    property "sonar.host.url", "https://sonarcloud.io"
-  }
+// Spotless registers itself like a dependency for build target.
+// But it is skipped for assemble.
+// We need to register it for other targets as well.
+tasks.named("assemble") {
+    dependsOn(tasks.named("spotlessCheck"))
 }
