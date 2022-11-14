@@ -1,7 +1,11 @@
 plugins {
+<<<<<<< HEAD
     java
     id("net.ltgt.errorprone") version "3.0.1"
     id("com.diffplug.spotless") version "6.11.0"
+=======
+  id "org.sonarqube" version "3.5.0.2730"
+>>>>>>> c33868e69f87740f3b79760bcf22c28d946d7f1e
 }
 
 buildscript {
@@ -66,6 +70,7 @@ jacocoTestReport {
 	}
 }
 
+<<<<<<< HEAD
 configure com.diffplug.gradle.spotless.SpotlessExtension {
     java {
         importOrder()
@@ -90,3 +95,12 @@ configure com.diffplug.gradle.spotless.SpotlessExtension {
 tasks.named("assemble") {
     dependsOn(tasks.named("spotlessCheck"))
 }
+=======
+sonarqube {
+  properties {
+    property "sonar.projectKey", "theISCA_eircode-api-cached_TCC"
+    property "sonar.organization", "theisca"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+>>>>>>> c33868e69f87740f3b79760bcf22c28d946d7f1e
