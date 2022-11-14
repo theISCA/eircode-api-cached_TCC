@@ -1,18 +1,18 @@
-plugins {
-    java
-    id("net.ltgt.errorprone") version "3.0.1"
-    id("com.diffplug.spotless") version "6.11.0"
-}
-
 buildscript {
 	repositories {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
-		classpath('se.transmode.gradle:gradle-docker:1.2')
+		classpath("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
+		classpath("com.diffplug.spotless:spotless-plugin-gradle:6.11.0")
 	}
 }
+plugins {
+	id 'java'
+	id("net.ltgt.errorprone") version "3.0.1"
+	id("com.diffplug.spotless") version "6.11.0"
+}
+
 
 group = 'rodrigomalara'
 
@@ -57,7 +57,7 @@ task buildDocker(type: Docker, dependsOn: build) {
   }
   
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14.1'
+	gradleVersion = '6.8.3'
 }
 
 jacocoTestReport {
@@ -66,7 +66,7 @@ jacocoTestReport {
 	}
 }
 
-configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+configure com.diffplug.gradle.spotless.SpotlessExtension {
     java {
         importOrder()
         removeUnusedImports()
