@@ -80,7 +80,7 @@ jobs:
             ./gradlew build sonarqube --info        
             
   test:
-  name: Testes Unitários
+    name: Testes Unitários
     runs-on: ubuntu-latest
     needs: sonarqube
     steps:
