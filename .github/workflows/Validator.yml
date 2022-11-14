@@ -60,8 +60,9 @@ jobs:
         with:
           java-version: 11
       - name: Spotless Check
-      - run: chmod +x ./gradlew
-      - run: ./gradlew spotlessCheck      
+        run: |
+          chmod +x ./gradlew
+          ./gradlew spotlessCheck      
             
   test:
     name: Testes Unitários
