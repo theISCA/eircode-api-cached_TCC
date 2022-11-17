@@ -19,8 +19,34 @@ dependencies {
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('uk.co.datumedge:hamcrest-json:0.2')
+	errorprone("com.google.errorprone:error_prone_core:2.16")
 }
 
 repositories {
 	mavenCentral()
+}
+
+configure <com.diffplug.gradle.spotless.SpotlessExtension> {
+	java {
+		importOrder()
+		removeUnusedImports()
+
+		googleJavaFormat()
+		indentWithTabs(2)
+		indentWithSpaces(4)
+		trimTrailingWhitespace()
+		endWithNewline()
+
+		formatAnnotations()
+	}
+	kotlinGradle {
+		ktlint()
+	}
+}
+
+// Spotless registers itself like a dependency for build target.
+// But it is skipped for assemble.
+// We need to register it for other targets as well.
+tasks.named("assemble") {
+	dependsOn(tasks.named("spotlessCheck"))
 }
