@@ -1,92 +1,26 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
-		classpath("com.diffplug.spotless:spotless-plugin-gradle:6.11.0")
-	}
-}
 plugins {
 	id 'java'
-	id("net.ltgt.errorprone") version "3.0.1"
-	id("com.diffplug.spotless") version "6.11.0"
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
+sourceCompatibility = 11
+targetCompatibility = 11
 
-group = 'rodrigomalara'
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-cache')
+	implementation('javax.cache:cache-api:1.0.0')
+	implementation('org.springframework.boot:spring-boot-starter-data-redis')
+	implementation('redis.clients:jedis:4.3.1')
+	// https://mvnrepository.com/artifact/javax.validation/validation-api
+	implementation('javax.validation:validation-api:2.0.1.Final')
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'spring-boot'
-apply plugin: 'docker'
-apply plugin: 'jacoco'
 
-jar {
-	baseName = 'eircode-api-cached'
-	version =  '0.1.0'
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('uk.co.datumedge:hamcrest-json:0.2')
 }
 
 repositories {
 	mavenCentral()
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-web'
-	compile 'org.springframework.boot:spring-boot-starter-cache'
-	compile 'javax.cache:cache-api:1.0.0'
-	compile 'org.springframework.data:spring-data-redis'
-	compile 'redis.clients:jedis:2.6.1'
-	testCompile 'org.springframework.boot:spring-boot-starter-test'
-	testCompile 'uk.co.datumedge:hamcrest-json:0.2'
-	errorprone("com.google.errorprone:error_prone_core:2.16")
-}
-
-task buildDocker(type: Docker, dependsOn: build) {
-	applicationName = jar.baseName
-	dockerfile = file('src/main/docker/Dockerfile')
-	doFirst {
-	  copy {
-		from jar
-		into stageDir
-	  }
-	}
-  }
-  
-task wrapper(type: Wrapper) {
-	gradleVersion = '6.8.3'
-}
-
-jacocoTestReport {
-	reports {
-		xml.enabled true
-	}
-}
-
-configure com.diffplug.gradle.spotless.SpotlessExtension {
-    java {
-        importOrder()
-        removeUnusedImports()
-
-        googleJavaFormat()
-        indentWithTabs(2)
-        indentWithSpaces(4)
-        trimTrailingWhitespace()
-        endWithNewline()
-
-        formatAnnotations()
-    }
-    kotlinGradle {
-        ktlint()
-    }
-}
-
-// Spotless registers itself like a dependency for build target.
-// But it is skipped for assemble.
-// We need to register it for other targets as well.
-tasks.named("assemble") {
-    dependsOn(tasks.named("spotlessCheck"))
 }
