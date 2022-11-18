@@ -33,7 +33,10 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew spotlessCheck
-          .gradlew spotlessApply
+      -name: Spotless Apply
+        run: |
+          chmod +x ./gradlew
+          ./gradlew spotlessApply
 
   sonarqube:
     name: SonarQubeScan
