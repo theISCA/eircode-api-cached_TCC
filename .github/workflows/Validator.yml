@@ -33,7 +33,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew spotlessCheck
-      -name: Spotless Apply
+      - name: Spotless Apply
         run: |
           chmod +x ./gradlew
           ./gradlew spotlessApply
