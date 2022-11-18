@@ -12,7 +12,7 @@ import java.net.URI;
 
 import org.eircodeapicached.address.api.AddressProxyService;
 import org.eircodeapicached.address.api.AddressURIBuilder;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
