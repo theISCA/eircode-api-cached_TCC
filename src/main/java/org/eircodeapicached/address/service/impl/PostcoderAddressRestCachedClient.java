@@ -3,10 +3,8 @@ package org.eircodeapicached.address.service.impl;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
-
 import javax.cache.annotation.CacheResult;
 import javax.validation.constraints.NotNull;
-
 import org.eircodeapicached.address.api.AddressURIBuilder;
 import org.eircodeapicached.address.service.PostcoderAddressClient;
 import org.slf4j.Logger;
@@ -25,49 +23,67 @@ import org.springframework.web.client.RestTemplate;
 @Validated
 public class PostcoderAddressRestCachedClient implements PostcoderAddressClient {
 
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${postcoder.address.host}")
-	private String addressLookupHost;
+  @Value("${postcoder.address.host}") private String addressLookupHost;
 
-	@Value("${postcoder.address.path}")
-	private String addressLookupPath;
+  @Value("${postcoder.address.path}") private String addressLookupPath;
 
-	@Autowired
-	private AddressURIBuilder uriBuilder;
+  @Autowired private AddressURIBuilder uriBuilder;
 
-	@Override
-	@CacheResult(cacheName="addressCache")
-	public String address(@NotNull String apiKey, @NotNull String country, String eircodeOrAddressFrag,
-			 String format, List<MediaType> acceptFormat, Integer lines, Integer page,
-			 String include, String exclude, String addtags, String identifier,
-			 String callback, Boolean postcodeonly) {
+  @Override
+  @CacheResult(cacheName = "addressCache")
+  public String address(
+      @NotNull String apiKey,
+      @NotNull String country,
+      String eircodeOrAddressFrag,
+      String format,
+      List<MediaType> acceptFormat,
+      Integer lines,
+      Integer page,
+      String include,
+      String exclude,
+      String addtags,
+      String identifier,
+      String callback,
+      Boolean postcodeonly) {
 
-		log.debug("About to generate REST service URI");
-		URI uri = uriBuilder.generateAddressURIFromUrl(addressLookupHost + addressLookupPath,
-				apiKey, country, eircodeOrAddressFrag, format, lines, page,
-				include, exclude, addtags, identifier, callback, postcodeonly);
-		log.debug("REST service URI generated");
+    log.debug("About to generate REST service URI");
+    URI uri =
+        uriBuilder.generateAddressURIFromUrl(
+            addressLookupHost + addressLookupPath,
+            apiKey,
+            country,
+            eircodeOrAddressFrag,
+            format,
+            lines,
+            page,
+            include,
+            exclude,
+            addtags,
+            identifier,
+            callback,
+            postcodeonly);
+    log.debug("REST service URI generated");
 
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		if (acceptFormat != null) {
-		  log.debug("Setting Accept HTTP header before invoking Postcoder service");
-		  headers.setAccept(acceptFormat);
-		}
+    RestTemplate restTemplate = new RestTemplate();
+    HttpHeaders headers = new HttpHeaders();
+    if (acceptFormat != null) {
+      log.debug("Setting Accept HTTP header before invoking Postcoder service");
+      headers.setAccept(acceptFormat);
+    }
 
-		HttpEntity<?> entity = new HttpEntity<>(headers);
-		log.debug("About to invoke Postcoder service...");
+    HttpEntity<?> entity = new HttpEntity<>(headers);
+    log.debug("About to invoke Postcoder service...");
 
-		Date before = new Date();
-		HttpEntity<String> response = restTemplate.exchange(
-				uri, HttpMethod.GET, entity, String.class);
-		Date after = new Date();
+    Date before = new Date();
+    HttpEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+    Date after = new Date();
 
-		String responseBody = response.getBody();
-		log.trace(">> {}", responseBody);
-		log.debug("Service invoked in {} ms", after.getTime() - before.getTime());
+    String responseBody = response.getBody();
+    log.trace(">> {}", responseBody);
+    log.debug("Service invoked in {} ms", after.getTime() - before.getTime());
 
-	    return responseBody;
-	}
+    return responseBody;
+  }
 }
