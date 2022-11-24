@@ -10,16 +10,17 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 @EnableCaching
 public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 
-    /**
-     * Needed for method-level arguments validation.
-     * @return
-     */
-    @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor() {
-        return new MethodValidationPostProcessor();
-    }
+  /**
+   * Needed for method-level arguments validation.
+   *
+   * @return
+   */
+  @Bean
+  public MethodValidationPostProcessor methodValidationPostProcessor() {
+    return new MethodValidationPostProcessor();
+  }
 }

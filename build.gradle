@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id ("net.ltgt.errorprone") version "3.0.1"
+	id ("com.diffplug.spotless") version "6.11.0"
 }
 
 sourceCompatibility = 11
@@ -20,8 +22,29 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('uk.co.datumedge:hamcrest-json:0.2')
 	testImplementation('junit:junit:4.12')
+	errorprone("com.google.errorprone:error_prone_core:2.16")
 }
 
 repositories {
 	mavenCentral()
+}
+
+spotless {
+	java {
+		importOrder()
+
+		removeUnusedImports()
+
+		// Choose one of these formatters.
+		googleJavaFormat()   // has its own section below
+
+		formatAnnotations()  // fixes formatting of type annotations, see below
+	}
+}
+
+// Spotless registers itself like a dependency for build target.
+// But it is skipped for assemble.
+// We need to register it for other targets as well.
+tasks.named("assemble") {
+	dependsOn(tasks.named("spotlessCheck"))
 }
