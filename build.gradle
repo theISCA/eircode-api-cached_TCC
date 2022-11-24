@@ -13,12 +13,13 @@ dependencies {
 	implementation('javax.cache:cache-api:1.0.0')
 	implementation('org.springframework.boot:spring-boot-starter-data-redis')
 	implementation('redis.clients:jedis:4.3.1')
-	// https://mvnrepository.com/artifact/javax.validation/validation-api
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation('javax.validation:validation-api:2.0.1.Final')
 
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('uk.co.datumedge:hamcrest-json:0.2')
+	testImplementation('junit:junit:4.12')
 }
 
 repositories {
