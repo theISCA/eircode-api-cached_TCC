@@ -29,14 +29,15 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Spotless Apply
-        run: |
-          chmod +x ./gradlew
-          ./gradlew spotlessApply
       - name: Spotless Check
         run: |
           chmod +x ./gradlew
           ./gradlew spotlessCheck
+      - name: Spotless Apply
+        run: |
+          chmod +x ./gradlew
+          ./gradlew spotlessApply
+        
 
   lint:
     name: Super-Linter Scan
